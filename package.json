@@ -1,0 +1,35 @@
+{
+  "name": "diceware-tk",
+  "version": "0.0.1",
+  "description": "Package that provides the necessary functions to implement diceware",
+  "main": "diceware.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "author": "Guillermo Garcia Grao <guillermo.garcia.grao@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.4",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "isndarray": "^1.0.0",
+    "jest": "^27.4.5",
+    "jsdoc": "^3.6.7"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "watchPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
+  },
+  "dependencies": {
+    "ndarray": "^1.0.19"
+  }
+}

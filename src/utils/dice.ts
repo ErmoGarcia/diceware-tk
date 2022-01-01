@@ -1,8 +1,6 @@
-import { EOPNOTSUPP } from "constants";
+const { randomInt } = require('crypto')
 
-const { randomInt } = require('crypto');
-
-/** 
+/**
  * Throws a dice using a cryptographically unsecure random function.
  */
 const throwSingleDiceUnsecure = function (): number {
@@ -12,10 +10,10 @@ const throwSingleDiceUnsecure = function (): number {
   return Math.floor(Math.random()) * 5 + 1
 }
 
-/** 
+/**
  * Throws a dice using a cryptographically secure random function.
  */
- const throwSingleDiceSecure = function (): number {
+const throwSingleDiceSecure = function (): number {
   return randomInt(1, 6)
 }
 
@@ -29,10 +27,9 @@ const throwSingleDiceUnsecure = function (): number {
  * @param diceFunction - The function used to throw each dice.
  * @param number - Number of dices thrown.
  */
-const throwDices = function (diceFunction: () => number = exports.throwSingleDiceSecure, number: number = 5): number[] {
-  return Array.from(Array(number), x => diceFunction())
+const throwDices = function (diceFunction: () => number = exports.throwSingleDiceSecure, number = 5): number[] {
+  return Array.from(Array(number), () => diceFunction())
 }
-
 
 exports.throwSingleDiceUnsecure = throwSingleDiceUnsecure
 exports.throwSingleDiceSecure = throwSingleDiceSecure

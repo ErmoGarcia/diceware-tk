@@ -3,17 +3,20 @@ env:
   commonjs: true
   es2021: true
 extends:
-  - standard
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:jest/recommended
+  - plugin:jest/style
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 13
+  project: "./tsconfig.json"
 plugins:
   - '@typescript-eslint'
   - 'jest'
-rules: {
-  - "jest/no-disabled-tests": "warn",
-  - "jest/no-focused-tests": "error",
-  - "jest/no-identical-title": "error",
-  - "jest/prefer-to-have-length": "warn",
-  - "jest/valid-expect": "error"
-}
+rules:
+  jest/no-disabled-tests: warn
+  jest/no-focused-tests: error
+  jest/no-identical-title: error
+  jest/prefer-to-have-length: warn
+  jest/valid-expect: error

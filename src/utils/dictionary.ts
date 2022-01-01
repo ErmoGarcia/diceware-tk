@@ -1,37 +1,19 @@
-const readline = require('readline')
-const fs = require('fs')
-const ndarray = require("ndarray")
-
-/**
- * Reads lines from a file.
- * @param filename - Name of the file to read.
- * @returns Each line of the file.
- */
-const readFile = async (filename: string): Promise<string[]> => {
-    const fileStream = fs.createReadStream(filename);
-
-    const rl = readline.createInterface({
-        input: fileStream,
-        crlfDelay: Infinity
-    });
-
-    let lines = []
-    for await (const line of rl) {
-        lines.push(line)
-    }
-    return lines
-}
+import { createInterface } from 'readline'
+import { createReadStream } from 'fs'
+import { once } from 'events'
+import ndarray = require('ndarray')
 
 /**
  * Extracts the indices (necessary results from the dice) and the word from each line.
  * @param line - A line from a dictionary file.
  * @returns An array with two values: with a list of indices (array of 5 numbers) and a word.
  */
-const parseLine = (line: string): any[] => {
-    const [ parsed_indices, word ] = line.split('\t')
-    const indices = Array.from(parsed_indices).map(element => {return parseInt(element)})
+const parseLine = (dictionary: ndarray.GenericArray<string>, line: string) => {
+  const [ parsedIndices, word ] = line.split('\t')
 
-    return [indices, word]
+  const indices: number[] = Array.from(parsedIndices).map(element => { return parseInt(element) })
+
+  dictionary.set(...indices, word)
 }
 
 /**
@@ -39,16 +21,21 @@ const parseLine = (line: string): any[] => {
  * @param filename - Name of the file with the dictionary.
  * @returns A 5 dimensional array with every word from the dictionary.
  */
-const loadDicitionaryFromFile = async (filename: string = 'src/dictionaries/DW-Espanol-1.txt'): Promise<string[][][][][]> => {
-    const dictionary_txt = await readFile(filename)
-    const dictionary = ndarray(Array(7776).fill(""), [6,6,6,6,6])
-    dictionary_txt.forEach(line => {
-        var [indices, word] = parseLine(line)
-        dictionary.set(indices[0],indices[1], indices[2], indices[3], indices[4], word)
-    });
-    return dictionary
+const loadDicitionaryFromFile = async (filename = 'src/dictionaries/DW-Espanol-1.txt'): Promise<ndarray.GenericArray<string>> => {
+  // Create interface to read lines from file
+  const rl = createInterface({ input: createReadStream(filename, 'utf-8'), crlfDelay: Infinity })
+
+  // Initialize dictionary
+  const dictionary: ndarray.GenericArray<string> = ndarray(Array(6 ** 5).fill(''), Array(5).fill(6))
+  console.log(typeof dictionary)
+
+  // Parse each line when read
+  rl.on('line', (line) => { parseLine(dictionary, line) })
+
+  // Wait until the interface is closed
+  await once(rl, 'close')
+
+  return dictionary
 }
 
-exports.readFile = readFile
 exports.loadDicitionaryFromFile = loadDicitionaryFromFile
-exports.parseLine = parseLine

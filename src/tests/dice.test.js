@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const dice_1 = require("../utils/dice");
+const { throwSingleDiceUnsecure, throwDices } = require('../utils/dice');
 describe('Dice operations', () => {
-    const defaultDices = (0, dice_1.throwDices)();
+    const defaultDices = throwDices();
     it('length is 5 by default', () => {
         expect(defaultDices).toHaveLength(5);
     });
@@ -13,7 +11,7 @@ describe('Dice operations', () => {
             expect(dice % 1).toBe(0);
         });
     });
-    const dices = (0, dice_1.throwDices)(dice_1.throwSingleDiceUnsecure, 4);
+    const dices = throwDices(throwSingleDiceUnsecure, 4);
     it('length is wathever was passed to the function', () => {
         expect(dices).toHaveLength(4);
     });

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.loadDicitionaryFromFile = void 0;
 const readline_1 = require("readline");
 const fs_1 = require("fs");
 const events_1 = require("events");
@@ -24,7 +25,6 @@ const loadDicitionaryFromFile = async (filename = 'src/dictionaries/DW-Espanol-1
     const rl = (0, readline_1.createInterface)({ input: (0, fs_1.createReadStream)(filename, 'utf-8'), crlfDelay: Infinity });
     // Initialize dictionary
     const dictionary = ndarray(Array(6 ** 5).fill(''), Array(5).fill(6));
-    console.log(typeof dictionary);
     // Parse each line when read
     rl.on('line', (line) => { parseLine(dictionary, line); });
     // Wait until the interface is closed

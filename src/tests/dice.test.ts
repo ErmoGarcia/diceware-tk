@@ -1,4 +1,4 @@
-import { throwSingleDiceUnsecure, throwDices } from '../utils/dice'
+const { throwSingleDiceUnsecure, throwDices } = require('../utils/dice')
 
 describe('Dice operations', () => {
   const defaultDices = throwDices()

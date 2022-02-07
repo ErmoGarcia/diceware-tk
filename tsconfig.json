@@ -2,7 +2,8 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "esnext",
-        "watch": true
+        "watch": true,
+        "lib": ["ES2017"]
     },
     "exclude": [
         "node_modules"

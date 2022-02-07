@@ -1,4 +1,7 @@
-const { randomInt } = require('crypto');
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.throwDices = exports.throwSingleDiceSecure = exports.throwSingleDiceUnsecure = void 0;
+const crypto_1 = require("crypto");
 /**
  * Throws a dice using a cryptographically unsecure random function.
  */
@@ -8,12 +11,14 @@ const throwSingleDiceUnsecure = function () {
     // En vez de eso, usar la API Web Crypto, y más precisamente el método: window.crypto.getRandomValues() (en-US).
     return Math.floor(Math.random()) * 5 + 1;
 };
+exports.throwSingleDiceUnsecure = throwSingleDiceUnsecure;
 /**
  * Throws a dice using a cryptographically secure random function.
  */
 const throwSingleDiceSecure = function () {
-    return randomInt(1, 6);
+    return (0, crypto_1.randomInt)(1, 6);
 };
+exports.throwSingleDiceSecure = throwSingleDiceSecure;
 /**
  * Callback function that throws a single dice.
  * @callback throwSingleDice
@@ -26,6 +31,4 @@ const throwSingleDiceSecure = function () {
 const throwDices = function (diceFunction = exports.throwSingleDiceSecure, number = 5) {
     return Array.from(Array(number), () => diceFunction());
 };
-exports.throwSingleDiceUnsecure = throwSingleDiceUnsecure;
-exports.throwSingleDiceSecure = throwSingleDiceSecure;
 exports.throwDices = throwDices;

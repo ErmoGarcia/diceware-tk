@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "references": [
+    {
+      "name": "diceware-tk",
+      "path": ".."
+    }
+  ],
+  "compilerOptions": {
+    "types": ["jest"],
+    "rootDir": "..",
+    "noEmit": true
+  },
+  "include": ["."]
+}

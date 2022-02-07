@@ -1,4 +1,4 @@
-import { randomInt } from 'crypto'
+import { randomNumber } from 'random-number-csprng';
 
 /**
  * Throws a dice using a cryptographically unsecure random function.
@@ -14,7 +14,7 @@ export const throwSingleDiceUnsecure = function (): number {
  * Throws a dice using a cryptographically secure random function.
  */
 export const throwSingleDiceSecure = function (): number {
-  return randomInt(1, 6)
+  return randomNumber(1, 6)
 }
 
 /**
@@ -27,6 +27,6 @@ export const throwSingleDiceSecure = function (): number {
  * @param diceFunction - The function used to throw each dice.
  * @param number - Number of dices thrown.
  */
-export const throwDices = function (diceFunction: () => number = exports.throwSingleDiceSecure, number = 5): number[] {
+export const throwDices = function (diceFunction: () => number = throwSingleDiceSecure, number = 5): number[] {
   return Array.from(Array(number), () => diceFunction())
 }

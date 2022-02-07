@@ -15,10 +15,14 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.4.0",
+    "@types/random-number-csprng": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "eslint": "^8.8.0",
     "jest": "^27.5.0",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "random-number-csprng": "^1.0.2"
   }
 }

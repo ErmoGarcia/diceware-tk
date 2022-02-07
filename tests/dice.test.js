@@ -1,3 +1,4 @@
+"use strict";
 const { throwSingleDiceUnsecure, throwDices } = require('../utils/dice');
 describe('Dice operations', () => {
     const defaultDices = throwDices();

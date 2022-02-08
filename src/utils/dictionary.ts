@@ -1,7 +1,7 @@
-import { createInterface } from 'readline'
-import { createReadStream } from 'fs'
-import { once } from 'events'
-import ndarray = require('ndarray')
+import { createInterface } from 'readline';
+import { createReadStream } from 'fs';
+import { once } from 'events';
+import ndarray from 'ndarray';
 
 /**
  * Extracts the indices (necessary results from the dice) and the word from each line.
@@ -35,4 +35,13 @@ export const loadDicitionaryFromFile = async (filename = 'src/dictionaries/DW-Es
   await once(rl, 'close')
 
   return dictionary
+}
+
+/**
+ * Loads a dictionary from a file into a multidimensional array.
+ * @param filename - Name of the file with the dictionary.
+ * @returns A 5 dimensional array with every word from the dictionary.
+ */
+ export const loadDicitionaryFromNetwork = (): void => {
+   return
 }

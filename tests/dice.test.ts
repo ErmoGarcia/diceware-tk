@@ -15,7 +15,7 @@ describe('Dice operations', () => {
     })
   })
 
-  const dices = throwDices(throwSingleDice, 4)
+  const dices = throwNDices(4, throwSingleDice)
 
   it('length is wathever was passed to the function', () => {
     expect(dices).toHaveLength(4)

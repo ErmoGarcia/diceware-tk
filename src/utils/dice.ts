@@ -1,35 +1,37 @@
 // import { randomNumber } from 'random-number-csprng';
-
+import { randomInt } from 'crypto';
 
 /**
  * Throws a dice using a cryptographically secure random function.
  * Function from https://github.com/EFForg/OpenWireless/blob/master/app/js/diceware.js
  */
 export const throwSingleDice = (min: number, max: number): number => {
-  var rval = 0;
-  var range = max - min;
+  let rval = 0;
+  const range = max - min;
   
-  var bits_needed = Math.ceil(Math.log2(range));
+  const bits_needed = Math.ceil(Math.log2(range));
   if (bits_needed > 53) {
     throw new Error("We cannot generate numbers larger than 53 bits.");
   }
-  var bytes_needed = Math.ceil(bits_needed / 8);
-  var mask = Math.pow(2, bits_needed) - 1; 
+  const bytes_needed = Math.ceil(bits_needed / 8);
+  const mask = Math.pow(2, bits_needed) - 1; 
   // 7776 -> (2^13 = 8192) -1 == 8191 or 0x00001111 11111111
   
   // Create byte array and fill with N random numbers
-  var byteArray = new Uint8Array(bytes_needed);
+  const byteArray = new Uint8Array(bytes_needed);
 
   // If running on the browser
-  if (window.crypto) {
+  if (typeof window !== "undefined") {
     window.crypto.getRandomValues(byteArray);
   }
+
   // If running on node
   else {
+    return randomInt(min, max)
   }
   
-  var p = (bytes_needed - 1) * 8;
-  for(var i = 0; i < bytes_needed; i++ ) {
+  let p = (bytes_needed - 1) * 8;
+  for(let i = 0; i < bytes_needed; i++ ) {
     rval += byteArray[i] * Math.pow(2, p);
     p -= 8;   
   }
@@ -72,6 +74,6 @@ export const throwSingleDice = (min: number, max: number): number => {
  * @param diceFunction - The function used to throw each dice.
  * @param number - Number of dices thrown.
  */
-export const throwNDices = function (diceFunction: (min: number, max: number) => number = throwSingleDice, number = 5): number[] {
+export const throwNDices = function (number = 5, diceFunction = throwSingleDice): number[] {
   return Array.from(Array(number), () => diceFunction(1, 6))
 }

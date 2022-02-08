@@ -1,4 +1,3 @@
-// import { randomNumber } from 'random-number-csprng';
 import { randomInt } from 'crypto';
 
 /**
@@ -27,7 +26,7 @@ export const throwSingleDice = (min: number, max: number): number => {
 
   // If running on node
   else {
-    return randomInt(min, max)
+    return randomInt(max - min) + min
   }
   
   let p = (bytes_needed - 1) * 8;
@@ -46,23 +45,6 @@ export const throwSingleDice = (min: number, max: number): number => {
   // Return an integer that falls within the range
   return min + rval;
 }
-
-// /**
-//  * Throws a dice using a cryptographically unsecure random function.
-//  */
-// export const throwSingleDiceUnsecure = function (): number {
-//   // Nota: Math.random() NO provee números aleatorios con seguridad criptográfica.
-//   // No deben ser usados para algo relacionado con seguridad.
-//   // En vez de eso, usar la API Web Crypto, y más precisamente el método: window.crypto.getRandomValues() (en-US).
-//   return Math.floor(Math.random()) * 5 + 1
-// }
-
-// /**
-//  * Throws a dice using a cryptographically secure random function.
-//  */
-// export const throwSingleDiceSecure = function (): number {
-//   return randomNumber(1, 6)
-// }
 
 /**
  * Callback function that throws a single dice.

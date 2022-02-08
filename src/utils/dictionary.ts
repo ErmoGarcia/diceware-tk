@@ -38,12 +38,56 @@ import ndarray from 'ndarray';
 // }
 
 
-const baseToDecimal = (digits: number[], base: number): number => {
-  digits.reverse()
+/**
+ * Loads a dictionary from a file into a multidimensional array.
+ * @param filename - Name of the file with the dictionary.
+ * @returns A 5 dimensional array with every word from the dictionary.
+ */
+ export const readDicitionaryFromNetwork = (): void => {
+  return
+}
 
+
+/**
+ * Loads a dictionary from a file into a multidimensional array.
+ * @param filename - Name of the file with the dictionary.
+ * @returns A 5 dimensional array with every word from the dictionary.
+ */
+ export const readDicitionaryFromFile = async (filename = './dictionaries/DW-Espanol-1.txt'): Promise<string[]> => {
+
+  // Create interface to read lines from file
+  const rl = createInterface({ input: createReadStream(filename, 'utf-8'), crlfDelay: Infinity })
+
+  // Initialize dictionary
+  const dictionary: string[] = Array()
+
+  // Parse each line when read
+  rl.on('line', (line) => {
+
+    const { index, word } = parseDictionaryLine(line)
+
+    if(word !== "" && index > -1) {
+      dictionary[baseXToDecimal(index)] = word
+    }
+  })
+
+  // Wait until the interface is closed
+  await once(rl, 'close')
+
+  return dictionary
+}
+
+
+
+export const baseXToDecimal = (input: number, base = 6): number => {
+  //  Convert input number to array of digits in inverse order
+  const digits: number[] = [...input.toString()].reverse().map(digit => { return parseInt(digit) })
+
+  // Multiply each digit and elevate the base to the power of its position
   const result = digits.reduce((previousValue, currentValue, currentIndex) => {
     return previousValue + currentValue * Math.pow(base, currentIndex)
   })
+
   return result
 }
 
@@ -53,54 +97,27 @@ const baseToDecimal = (digits: number[], base: number): number => {
  * @param line - A line from a dictionary file.
  * @returns An array with two values: with a list of indices (array of 5 numbers) and a word.
  */
- export const parseFileLine = (line: string): RegExpMatchArray[] => {
+export const parseDictionaryLine = (line: string): {index: number, word: string} => {
 
-  const matches = [...line.matchAll(/([1-6]{5})\s*([\p{L}\d]*)/g)]
+  [...line.matchAll(/([1-6]{5})\s*([\p{L}\d]*)/g)].forEach(match => {
+    const parsedLine = {index: parseInt(match[1]), word: match[2]};
+    return parsedLine
+  });
 
-  return matches
+  return {index: -1, word: ""}
 }
 
 
-export const addWordToDictionary = (dictionary: string[], index: string, word: string) => {
-  const indices: number[] = Array.from(index).map(element => { return parseInt(element) - 1 })
+// export const addWordToDictionary = (dictionary: string[], index: string, word: string) => {
+//   const indices: number[] = Array.from(index).map(element => { return parseInt(element) - 1 })
 
-  const mappedIndex = baseToDecimal(indices, 6)
+//   const mappedIndex = baseXToDecimal(indices)
 
-  dictionary[mappedIndex] = word
-}
-
-/**
- * Loads a dictionary from a file into a multidimensional array.
- * @param filename - Name of the file with the dictionary.
- * @returns A 5 dimensional array with every word from the dictionary.
- */
-export const readFileLines = async (filename = './dictionaries/DW-Espanol-1.txt'): Promise<string[]> => {
-  // Create interface to read lines from file
-  const rl = createInterface({ input: createReadStream(filename, 'utf-8'), crlfDelay: Infinity })
-
-  // Initialize dictionary
-  // const dictionary: string[] = Array(6**5).fill('')
-
-  const lines: string[] = []
-
-  // Parse each line when read
-  rl.on('line', (line) => { lines.push(line) })
-
-  // Wait until the interface is closed
-  await once(rl, 'close')
-
-  return lines
-}
+//   dictionary[mappedIndex] = word
+// }
 
 
 
 
 
-/**
- * Loads a dictionary from a file into a multidimensional array.
- * @param filename - Name of the file with the dictionary.
- * @returns A 5 dimensional array with every word from the dictionary.
- */
- export const readDicitionaryFromNetwork = (): void => {
-   return
-}
+

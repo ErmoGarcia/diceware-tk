@@ -1,18 +1,28 @@
 import { createInterface } from 'readline';
 import { createReadStream } from 'fs';
 import { once } from 'events';
+import axios from 'axios';
 
 /**
- * Loads a wordlist from a file into a multidimensional array.
- * @param filename - Name of the file with the wordlist.
- * @returns A 5 dimensional array with every word from the wordlist.
+ * Gets a wordlist from a URL and maps it into an array.
+ * @param url - URL of the file with the wordlist.
+ * @returns An array with every word from the wordlist.
  */
- export const readWordlistFromNetwork = (): void => {
-  return
+ export const readWordlistFromNetwork = async (url: string): Promise<string[]> => {
+  const response = await axios.get(url)
+
+  if(response.data) {
+    const lines = response.data.split('\n').filter((line: string) => {return line})
+    return lines
+  }
+
+  else {
+    return []
+  }
 }
 
 /**
- * Loads a wordlist from a file into a multidimensional array.
+ * Loads a wordlist from a file and maps it into an array.
  * @param filename - Name of the file with the wordlist.
  * @returns An array with every word from the wordlist.
  */
@@ -59,6 +69,7 @@ export const readLinesFromFile = async (filename: string) => {
  * Converts a number from base X to base 10.
  * @param {number} input - The number to convert.
  * @param {number} base - The original base.
+ * @param {number} offset - The offset to substract from the input number.
  * @returns the input number converted to base 10.
  */
 export const baseXToDecimal = (input: number, base = 6, offset = 11111): number => {

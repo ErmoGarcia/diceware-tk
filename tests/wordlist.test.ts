@@ -1,5 +1,13 @@
 import { readWordlistFromNetwork, readWordlistFromFile, parseLineFromWordlist, baseXToDecimal, readLinesFromFile  } from '../src/utils/wordlist';
 
+describe.each(['https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt'])('Read wordlist from URL', (url) => {
+
+  it("Reads wordlist from file and loads it into an array", async () => {
+    const wordlist = await readWordlistFromNetwork(url)
+    expect(wordlist).toHaveLength(6**5)
+  })
+})
+
 describe.each(['./dictionaries/DW-Espanol-1.txt', './dictionaries/DW-Espanol-2.txt'])('Read wordlist from file', (filename) => {
 
   it("Reads lines from a file", async () => {

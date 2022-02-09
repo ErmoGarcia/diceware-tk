@@ -50,7 +50,7 @@ import axios from 'axios';
  * @param filename - Location of the file to read.
  * @returns an array with every word from the wordlist.
  */
-const readLinesFromFile = async (filename: string) => {
+export const readLinesFromFile = async (filename: string) => {
   // Create interface to read lines from file
   const rl = createInterface({ input: createReadStream(filename, 'utf-8'), crlfDelay: Infinity })
 

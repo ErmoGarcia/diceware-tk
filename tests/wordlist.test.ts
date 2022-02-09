@@ -27,10 +27,11 @@ describe('Wordlist operations', () => {
   })
 
   it("Converts a number from base x to decimal", () => {
-    expect(baseXToDecimal(41245)).toBe(5501)
-    expect(baseXToDecimal(2341234120)).toBe(26380992)
-    expect(baseXToDecimal(403120)).toBe(31800)
-    expect(baseXToDecimal(3012, 4)).toBe(198)
-    expect(baseXToDecimal(100110111, 2)).toBe(311)
+    expect(baseXToDecimal(11111)).toBe(0)
+    expect(baseXToDecimal(41245, 6, 0)).toBe(5501)
+    expect(baseXToDecimal(2341234120, 6, 0)).toBe(26380992)
+    expect(baseXToDecimal(403120, 6, 0)).toBe(31800)
+    expect(baseXToDecimal(3012, 4, 0)).toBe(198)
+    expect(baseXToDecimal(100110111, 2, 0)).toBe(311)
   })
 })

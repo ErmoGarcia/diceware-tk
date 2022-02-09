@@ -27,7 +27,7 @@ import { once } from 'events';
 
     const { index, word } = parseLineFromWordlist(line)
 
-    if(word && index) { wordlist[baseXToDecimal(index - 11111)] = word }
+    if(word && index) { wordlist[baseXToDecimal(index)] = word }
 
   })
 
@@ -61,7 +61,10 @@ export const readLinesFromFile = async (filename: string) => {
  * @param {number} base - The original base.
  * @returns the input number converted to base 10.
  */
-export const baseXToDecimal = (input: number, base = 6): number => {
+export const baseXToDecimal = (input: number, base = 6, offset = 11111): number => {
+  // Apply offset
+  input = input - offset
+
   //  Convert input number to array of digits in inverse order
   const digits: number[] = [...input.toString()].reverse().map(digit => { return parseInt(digit) })
 

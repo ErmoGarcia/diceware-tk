@@ -6,7 +6,7 @@ import axios from 'axios';
 /**
  * Gets a wordlist from a URL and maps it into an array.
  * @param url - URL of the file with the wordlist.
- * @returns An array with every word from the wordlist.
+ * @returns an array with every word from the wordlist.
  */
  export const readWordlistFromNetwork = async (url: string): Promise<string[]> => {
   const response = await axios.get(url)
@@ -24,7 +24,7 @@ import axios from 'axios';
 /**
  * Loads a wordlist from a file and maps it into an array.
  * @param filename - Name of the file with the wordlist.
- * @returns An array with every word from the wordlist.
+ * @returns an array with every word from the wordlist.
  */
  export const readWordlistFromFile = async (filename: string): Promise<string[]> => {
 
@@ -46,9 +46,9 @@ import axios from 'axios';
 
 
 /**
- * Returns an array with each line from a file
- * @param filename - Location of the file to read
- * @returns 
+ * Returns an array with each line from a file.
+ * @param filename - Location of the file to read.
+ * @returns an array with every word from the wordlist.
  */
 export const readLinesFromFile = async (filename: string) => {
   // Create interface to read lines from file
@@ -95,7 +95,7 @@ interface parsedLine {
 /**
  * Extracts the index and the word from each line in the wordlist.
  * @param line - A line from a wordlist.
- * @returns An object with an index (digits between 1 and 6) and a word.
+ * @returns an object with an index (digits between 1 and 6) and a word.
  */
 export const parseLineFromWordlist = (line: string): parsedLine => {
   const filteredLine = line.replace(/[\0]/g, "")

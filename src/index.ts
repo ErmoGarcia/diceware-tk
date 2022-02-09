@@ -34,3 +34,5 @@ export const getPassphrase = async (nWords = 5, nDices = 5, wordlist = 'https://
     const dices = await throwNDices(nDices)
     return await Promise.all(Array(nWords).fill(getRandomWord(dices, wordlist, localfile)))
 }
+
+export { throwNDices, baseXToDecimal, readWordlistFromFile, readWordlistFromNetwork }

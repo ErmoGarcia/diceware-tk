@@ -41,7 +41,7 @@ const word = getSingleWord([4, 3, 4, 6, 3])
 console.log(word)
 ```
 
-## Reference
+## API Reference
 
 Description for every available function:
 

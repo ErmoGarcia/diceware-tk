@@ -1,5 +1,5 @@
 import { throwNDices } from "./utils/dice"
-import { baseXToDecimal, readWordlistFromFile, readWordlistFromNetwork } from "./utils/wordlist"
+import { baseXToDecimal, parseLineFromWordlist, readWordlistFromFile, readWordlistFromNetwork } from "./utils/wordlist"
 
 /**
  * Gets the corresponding word from a wordlist given a set of values obtained from dices.
@@ -8,7 +8,7 @@ import { baseXToDecimal, readWordlistFromFile, readWordlistFromNetwork } from ".
  * @param localfile - Wheter the dictionary comes from a local file or a URL.
  * @returns a word from the specified wordlist.
  */
-export const getRandomWord = async (dices: number[], wordlist = 'https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt', localfile = false): Promise<string> => {
+export const getSingleWord = async (dices: number[], wordlist = 'https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt', localfile = false): Promise<string> => {
     const index = baseXToDecimal(parseInt(dices.join()))
 
     if(localfile) {
@@ -30,9 +30,9 @@ export const getRandomWord = async (dices: number[], wordlist = 'https://www.eff
  * @param localfile - Wheter the dictionary comes from a local file or a URL.
  * @returns an array with random words to form a passphrase.
  */
-export const getPassphrase = async (nWords = 5, nDices = 5, wordlist = 'https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt', localfile = false): Promise<string[]> => {
+export const getPassphrase = async (nWords = 6, nDices = 5, wordlist = 'https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt', localfile = false): Promise<string[]> => {
     const dices = await throwNDices(nDices)
-    return await Promise.all(Array(nWords).fill(getRandomWord(dices, wordlist, localfile)))
+    return await Promise.all(Array(nWords).fill(getSingleWord(dices, wordlist, localfile)))
 }
 
-export { throwNDices, baseXToDecimal, readWordlistFromFile, readWordlistFromNetwork }
+export { throwNDices, baseXToDecimal, parseLineFromWordlist, readWordlistFromFile, readWordlistFromNetwork }

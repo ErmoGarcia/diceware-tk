@@ -98,10 +98,15 @@ interface parsedLine {
  * @returns an object with an index (digits between 1 and 6) and a word.
  */
 export const parseLineFromWordlist = (line: string): parsedLine => {
-  const filteredLine = line.replace(/[\0]/g, "")
-  const matches = [...filteredLine.matchAll(/([1-6]{5})\s*([\p{L}\d]+)/gu)]
-  const parsedLine: parsedLine = {};
 
+  // Filter null characters
+  const filteredLine = line.replace(/[\0]/g, "")
+
+  // Match index and word with RegExp
+  const matches = [...filteredLine.matchAll(/([1-6]{5})\s*([\p{L}\d]+)/gu)]
+
+
+  const parsedLine: parsedLine = {};
   matches.forEach(match => {
     parsedLine["index"] = parseInt(match[1])
     parsedLine["word"] = match[2]

@@ -45,9 +45,18 @@ console.log(word)
 
 Description for every available function:
 
-### Main functions
+- [Main functions](#main-functions)
+    - [getPassphrase](#getPassphrase)
+    - [getSingleWord](#getSingleWord)
+- [Lower level functions](#lower-level-functions)
+    - [throwNDices](#throwNDices)
+    - [baseXToDecimal](baseXToDecimal)
+    - [parseLineFromWordlist](parseLineFromWordlist)
+    - [readWordlistFromFile](readWordlistFromFile)
 
-#### getPassphrase
+### Main functions<a name="main-functions"/>
+
+#### getPassphrase<a name="getPassphrase"/>
 
 Gets random words from the wordlist, forming a secure passphrase. Returns an array with random words to form a passphrase.
 
@@ -58,7 +67,7 @@ Gets random words from the wordlist, forming a secure passphrase. Returns an arr
 | wordlist  | string  | URL or local path of the wordlist used to get the words | https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt |
 | localfile | boolean | Wheter the dictionary comes from a local file or a URL | false |
 
-#### getSingleWord
+#### getSingleWord<a name="getSingleWord"/>
 
 Gets the corresponding word from a wordlist given a set of values obtained from dices. Returns a word from the specified wordlist.
 
@@ -68,9 +77,9 @@ Gets the corresponding word from a wordlist given a set of values obtained from 
 | wordlist  | string    | URL or local path of the wordlist used to get the words | https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt |
 | localfile | boolean   | Wheter the dictionary comes from a local file or a URL  | false |
 
-### Lower level functions
+### Lower level functions<a name="lower-level-functions"/>
 
-#### throwNDices
+#### throwNDices<a name="throwNDices"/>
 
 Generates n random dice results.
 Returns an array of random numbers in the define range.
@@ -83,7 +92,7 @@ This function offers the possibility of using dices with values different from 1
 | min | number | Min value on the dice | 1 |
 | max | number | Max value on the dice | 6 |
 
-#### baseXToDecimal
+#### baseXToDecimal<a name="baseXToDecimal"/>
 
 Converts a number from base X to base 10.
 In a wordlist where words are obtained using 5 dices, the indices in the list cover all the possible dice results from 11111 to 66666.
@@ -99,7 +108,7 @@ The base and offset can be changed to accomodate to dices with values different 
 | base   | number | The original base                             | 6 |
 | offset | number | The offset to substract from the input number | 11111 |
 
-#### parseLineFromWordlist
+#### parseLineFromWordlist<a name="parseLineFromWordlist"/>
 
 Parses a line in a wordlist, extracting the word and its index.
 
@@ -107,7 +116,7 @@ Parses a line in a wordlist, extracting the word and its index.
 | --- | --- | --- | --- |
 | line  | string | A line from a wordlist | N/A |
 
-#### readWordlistFromFile
+#### readWordlistFromFile<a name="readWordlistFromFile"/>
 
 Loads a wordlist from a file and maps it into an array.
 As long as its format is similar to the [https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt](EFF wordlist), it should be able to load it.
@@ -117,7 +126,7 @@ It assumes the wordlist uses 5 regular dices, resulting in 7776 words.
 | --- | --- | --- | --- |
 | wordlist  | string | URL or local path of the wordlist used to get the words | N/A |
 
-#### readWordlistFromNetwork
+#### readWordlistFromNetwork<a name="main-functions"/>
 
 Loads a wordlist from a URL and maps it into an array.
 As long as its format is similar to the [https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt](EFF wordlist), it should be able to load it.

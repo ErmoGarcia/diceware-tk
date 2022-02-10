@@ -64,7 +64,7 @@ Gets random words from the wordlist, forming a secure passphrase. Returns an arr
 | --- | --- | --- | --- |
 | nWords    | number  | Number of words to return | 6 |
 | nDices    | number  | Number of dices used per entry in the wordlist (must be coherent with the wordlist used) | 5 |
-| wordlist  | string  | URL or local path of the wordlist used to get the words | https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt |
+| wordlist  | string  | URL or local path of the wordlist used to get the words | "https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt" |
 | localfile | boolean | Wheter the dictionary comes from a local file or a URL | false |
 
 #### getSingleWord<a name="getSingleWord"/>
@@ -74,7 +74,7 @@ Gets the corresponding word from a wordlist given a set of values obtained from 
 | Param     | Type      | Description                                             | Default |
 | --- | --- | --- | --- |
 | dices     | number[]  | An array containing the values obtained from the dices  | N/A |
-| wordlist  | string    | URL or local path of the wordlist used to get the words | https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt |
+| wordlist  | string    | URL or local path of the wordlist used to get the words | "https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt" |
 | localfile | boolean   | Wheter the dictionary comes from a local file or a URL  | false |
 
 ### Lower level functions<a name="lower-level-functions"/>

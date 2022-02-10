@@ -6,12 +6,12 @@ describe.each(['src/dictionaries/DW-Espanol-1.txt', 'src/dictionaries/DW-Espanol
     it('Creating a 5 words passphrase (default)', async () => {
         const passphrase = await getPassphrase()
 
-        expect(passphrase).toHaveLength(5)
+        expect(passphrase).toHaveLength(6)
     })
 
     it('Creating a 6 words passphrase', async () => {
-        const passphrase = await getPassphrase(6)
+        const passphrase = await getPassphrase(5)
 
-        expect(passphrase).toHaveLength(6)
+        expect(passphrase).toHaveLength(5)
     })
 })

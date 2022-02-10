@@ -18,7 +18,7 @@ or
 
 `$ yarn add diceware-tk`
 
-To get a list of 6 random words from the [https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt](EFF wordlist):
+To get a list of 6 random words from the [EFF wordlist](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt):
 
 ```
 import { getPassphrase } from 'diceware-tk';

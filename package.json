@@ -5,6 +5,7 @@
   "author": "Guillermo <guillermo.garcia.grao@gmail.com>",
   "license": "MIT",
   "types": "dist/index.d.ts",
+  "browser": "dist/index.browser.js",
   "scripts": {
     "build": "tsc",
     "dev": "yarn build --watch --preserveWatchOutput",

@@ -9,7 +9,8 @@
     "build": "tsc",
     "dev": "yarn build --watch --preserveWatchOutput",
     "lint": "eslint src --ext js,ts",
-    "test": "jest"
+    "test": "jest",
+    "browser-tests": "karma start"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
@@ -25,8 +26,10 @@
     "jest-mock": "^27.5.1",
     "jsdoc": "^3.6.10",
     "karma": "^6.3.16",
+    "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^4.0.1",
     "karma-webpack": "^5.0.0",
+    "ts-loader": "^9.2.6",
     "typescript": "^4.5.5",
     "webpack": "^5.68.0"
   },

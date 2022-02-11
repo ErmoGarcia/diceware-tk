@@ -6,6 +6,7 @@ module.exports = function(config) {
     plugins: [
       'karma-webpack',
       'karma-jasmine',
+      'karma-chrome-launcher',
     ],
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -19,18 +20,19 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      './scripts/karma-setup.js',
       'tests/**/*.ts'
     ],
 
 
     // list of files / patterns to exclude
-    exclude: [
-    ],
+    exclude: [],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
+      './karma-setup.js': ['webpack'],
       'test/**/*.test.ts': [ 'webpack' ]
     },
 
@@ -60,7 +62,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://www.npmjs.com/search?q=keywords:karma-launcher
-    browsers: [],
+    browsers: ['Chromium'],
 
 
     // Continuous Integration mode
@@ -69,6 +71,26 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser instances should be started simultaneously
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    webpack: {
+      transformPath: (filepath) => {
+        // force *.js files by default
+        const info = path.parse(filepath);
+        return `${path.join(info.dir, info.name)}.js`;
+      },
+      resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+      },
+      module: {
+        rules: [
+          {
+            test: /\.tsx?$/,
+            use: 'ts-loader',
+            exclude: /node_modules/,
+          },
+        ],
+      }
+    }
   })
 }

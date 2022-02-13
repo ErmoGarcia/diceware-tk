@@ -50,7 +50,7 @@ import axios from 'axios';
   }
 
   else {
-    return []
+    throw new Error("Wordlist URL returned no data")
   }
 }
 

@@ -1,4 +1,4 @@
-import { readWordlistFromNetwork, readWordlistFromFile, parseLineFromWordlist, baseXToDecimal, readLinesFromFile  } from '../src/utils/wordlist';
+import { readWordlistFromNetwork, readWordlistFromFile, readWordlist, parseLineFromWordlist, computeIndex  } from '../src/utils/wordlist';
 
 describe.each(['https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt'])('Read wordlist from URL', (url) => {
 
@@ -11,13 +11,13 @@ describe.each(['https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt'])('
 describe.each(['./dictionaries/DW-Espanol-1.txt', './dictionaries/DW-Espanol-2.txt'])('Read wordlist from file', (filename) => {
 
   it("Reads lines from a file", async () => {
-    const lines = await readLinesFromFile(filename)
+    const lines = await readWordlistFromFile(filename)
     expect(lines).toBeTruthy();    
     expect(parseLineFromWordlist(lines[0])).toEqual({index: 11111, word: "0"})
   })
 
   it("Reads wordlist from file and loads it into an array", async () => {
-    const wordlist = await readWordlistFromFile(filename)
+    const wordlist = await readWordlist(filename, true)
     expect(wordlist).toHaveLength(6**5)
   })
 })
@@ -35,11 +35,17 @@ describe('Wordlist operations', () => {
   })
 
   it("Converts a number from base x to decimal", () => {
-    expect(baseXToDecimal(11111)).toBe(0)
-    expect(baseXToDecimal(41245, 6, 0)).toBe(5501)
-    expect(baseXToDecimal(2341234120, 6, 0)).toBe(26380992)
-    expect(baseXToDecimal(403120, 6, 0)).toBe(31800)
-    expect(baseXToDecimal(3012, 4, 0)).toBe(198)
-    expect(baseXToDecimal(100110111, 2, 0)).toBe(311)
+    expect(computeIndex(11111)).toBe(0)
+    expect(computeIndex(41245, 6, 0)).toBe(5501)
+    expect(computeIndex(2341234120, 6, 0)).toBe(26380992)
+    expect(computeIndex(403120, 6, 0)).toBe(31800)
+    expect(computeIndex(3012, 4, 0)).toBe(198)
+    expect(computeIndex(100110111, 2, 0)).toBe(311)
+  })
+})
+
+describe('Bad wordlist URL', () => {
+  it("Reads wordlist from a wrong URL", async () => {
+    await expect(() => readWordlistFromNetwork("wrong_url.com")).rejects.toThrow()
   })
 })

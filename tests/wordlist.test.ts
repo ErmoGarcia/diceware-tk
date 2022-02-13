@@ -1,6 +1,6 @@
 import { readWordlistFromNetwork, readWordlistFromFile, readWordlist, parseLineFromWordlist, computeIndex  } from '../src/utils/wordlist';
 
-describe.each(['https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt', 'https://theworld.com/~reinhold/diceware_espanol/DW-Espanol-1.txt'])('Read wordlist from URL', (url) => {
+describe.each(['https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt', 'https://theworld.com/~reinhold/diceware_espanol/DW-Espanol-1.txt', 'https://theworld.com/~reinhold/diceware_espanol/DW-Espanol-2.txt'])('Read wordlist from URL', (url) => {
 
   it("Reads lines from network file", async () => {
     const lines = await readWordlistFromNetwork(url)

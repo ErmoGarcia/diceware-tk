@@ -1,4 +1,5 @@
 import axios from 'axios';
+import https from 'https';
 
 /**
  * Loads a wordlist and maps it into an array.
@@ -39,7 +40,14 @@ import axios from 'axios';
  * @returns {Promise<string[]>} An array with every line from the wordlist.
  */
  export const readWordlistFromNetwork = async (url: string): Promise<string[]> => {
-  const response = await axios.get(url)
+  let response
+  try {
+    response = await axios.get(url)
+  }
+  catch(e) {
+    const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+    response = await axios.get(url, { httpsAgent })
+  }
 
   if(response.data) {
     const lines = response.data.split('\n').filter((line: string) => {return line})

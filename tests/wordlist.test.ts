@@ -1,16 +1,16 @@
 import { readWordlistFromNetwork, readWordlistFromFile, readWordlist, parseLineFromWordlist, computeIndex  } from '../src/utils/wordlist';
 
-describe.each(['https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt'])('Read wordlist from URL', (url) => {
+describe.each(['https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt', 'https://theworld.com/~reinhold/diceware_espanol/DW-Espanol-1.txt'])('Read wordlist from URL', (url) => {
 
-  it("Reads wordlist from file and loads it into an array", async () => {
-    const wordlist = await readWordlistFromNetwork(url)
-    expect(wordlist).toHaveLength(6**5)
+  it("Reads lines from network file", async () => {
+    const lines = await readWordlistFromNetwork(url)
+    expect(lines).toBeTruthy();
   })
 })
 
 describe.each(['./dictionaries/DW-Espanol-1.txt', './dictionaries/DW-Espanol-2.txt'])('Read wordlist from file', (filename) => {
 
-  it("Reads lines from a file", async () => {
+  it("Reads lines from local file", async () => {
     const lines = await readWordlistFromFile(filename)
     expect(lines).toBeTruthy();    
     expect(parseLineFromWordlist(lines[0])).toEqual({index: 11111, word: "0"})

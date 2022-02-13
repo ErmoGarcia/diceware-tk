@@ -1,10 +1,42 @@
-
 import axios from 'axios';
 
 /**
- * Gets a wordlist from a URL and maps it into an array.
- * @param url - URL of the file with the wordlist.
- * @returns an array with every word from the wordlist.
+ * Loads a wordlist and maps it into an array.
+ * @async
+ * @param {string} location - URL or filename used to locate the wordlist.
+ * @param {boolean} localfile - Wheter the dictionary comes from a local file or a URL.
+ * @returns {Promise<string[]>} An array with every word from the wordlist.
+ */
+ export const readWordlist = async (location: string, localfile = false): Promise<string[]> => {
+
+  let lines: string[]
+
+  // Check wether the wordlist should be read from a local file or a URL
+  if(localfile) {
+    // Read wordlist file
+    throw new Error("Functionality only available in Node.")
+  } else {
+    // Read wordlist file
+    lines = await readWordlistFromNetwork(location)
+  }
+  
+  // Parse each line from the wordlist
+  const wordlist: string[] = []
+  lines.forEach(line => {
+
+    const { index, word } = parseLineFromWordlist(line)
+
+    if(word && index) { wordlist[computeIndex(index)] = word }
+
+  })
+
+  return wordlist
+}
+
+/**
+ * Gets a wordlist from a URL.
+ * @param {string} url - URL of the file with the wordlist.
+ * @returns {Promise<string[]>} An array with every line from the wordlist.
  */
  export const readWordlistFromNetwork = async (url: string): Promise<string[]> => {
   const response = await axios.get(url)
@@ -20,13 +52,13 @@ import axios from 'axios';
 }
 
 /**
- * Converts a number from base X to base 10.
+ * Converts a number from base X to base 10 (to be used as an index in the wordlist array).
  * @param {number} input - The number to convert.
- * @param {number} base - The original base.
- * @param {number} offset - The offset to substract from the input number.
- * @returns the input number converted to base 10.
+ * @param {number} [base=6] - The original base.
+ * @param {number} [offset=11111] - The offset to substract from the input number.
+ * @returns {number} The input number converted to base 10.
  */
-export const baseXToDecimal = (input: number, base = 6, offset = 11111): number => {
+export const computeIndex = (input: number, base = 6, offset = 11111): number => {
   // Apply offset
   input = input - offset
 
@@ -48,8 +80,8 @@ interface parsedLine {
 
 /**
  * Extracts the index and the word from each line in the wordlist.
- * @param line - A line from a wordlist.
- * @returns an object with an index (digits between 1 and 6) and a word.
+ * @param {string} line - A line from a wordlist.
+ * @returns {index?: number, word?: string} An object with an index (digits between 1 and 6) and a word.
  */
 export const parseLineFromWordlist = (line: string): parsedLine => {
 
@@ -68,9 +100,3 @@ export const parseLineFromWordlist = (line: string): parsedLine => {
 
   return parsedLine;
 }
-
-
-
-
-
-

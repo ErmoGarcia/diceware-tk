@@ -4,9 +4,11 @@ A library to provide the necesary functions to properly implent Diceware.
 
 ## Features
 
-- Generate a cryptographically secure random passphrase from a wordlist using the [diceware](https://theworld.com/~reinhold/diceware.html) method
-- Possibility of loading any wordlist from a URL or a local file
-- Provides lower level functions to tweak some parameters like the numbers on the dice
+This library provides the following features:
+
+- Generating a cryptographically secure random passphrase from a wordlist using the [diceware](https://theworld.com/~reinhold/diceware.html) method.
+- Loading any wordlist from a URL or a local file.
+- Accessing to lower level functions useful for specific use cases.
 
 ## Getting started
 
@@ -18,7 +20,8 @@ or
 
 `$ yarn add diceware-tk`
 
-To get a list of 6 random words from the [EFF wordlist](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt):
+
+The *getPassphrase* function can be used to generate a secure passphrase. This is a high level function that returns an array with 6 random words from the [EFF wordlist](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt):
 
 ```
 import { getPassphrase } from 'diceware-tk';
@@ -26,19 +29,6 @@ import { getPassphrase } from 'diceware-tk';
 const passphrase = getPassphrase()
 
 console.log(passphrase.join())
-```
-
-Words can also be retrieved one by one.
-Physical dices can be used to generate the random values (which is the recommended way of doing it), then passed to the program to get the words. 
-To get random words one at a time:
-
-```
-import { getSingleWord } from 'diceware-tk';
-
-// Results from the physical dices were 4, 3, 4, 6, 3
-const word = getSingleWord([4, 3, 4, 6, 3])
-
-console.log(word)
 ```
 
 ## API Reference
@@ -50,9 +40,11 @@ Description for every available function:
     - [getSingleWord](#getSingleWord)
 - [Lower level functions](#lower-level-functions)
     - [throwNDices](#throwNDices)
-    - [baseXToDecimal](baseXToDecimal)
+    - [computeIndex](computeIndex)
     - [parseLineFromWordlist](parseLineFromWordlist)
-    - [readWordlistFromFile](readWordlistFromFile)
+    - [readWordlist](readWordlist)
+    - [readWordlistFromFile](readWordlistFromNetwork)
+    - [readWordlistFromNetwork](readWordlistFromFile)
 
 ### Main functions<a name="main-functions"/>
 
@@ -92,7 +84,7 @@ This function offers the possibility of using dices with values different from 1
 | min | number | Min value on the dice | 1 |
 | max | number | Max value on the dice | 6 |
 
-#### baseXToDecimal<a name="baseXToDecimal"/>
+#### computeIndex<a name="computeIndex"/>
 
 Converts a number from base X to base 10.
 In a wordlist where words are obtained using 5 dices, the indices in the list cover all the possible dice results from 11111 to 66666.
@@ -111,28 +103,39 @@ The base and offset can be changed to accomodate to dices with values different 
 #### parseLineFromWordlist<a name="parseLineFromWordlist"/>
 
 Parses a line in a wordlist, extracting the word and its index.
+It uses the Regular Expresion to match the index and the word respectively: **/([1-6]{5})\s*([\p{L}\d]+)/gu**
 
 | Param  | Type   | Description           | Default |
 | --- | --- | --- | --- |
 | line  | string | A line from a wordlist | N/A |
 
+#### readWordlist<a name="readWordlist"/>
+
+Loads a wordlist from a file or URL and maps it into an array.
+As long as its format is similar to the [https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt](EFF wordlist), it should be able to load it.
+It assumes the wordlist uses 5 regular dices, resulting in 7776 words.
+
+| Param  | Type   | Description | Default |
+| --- | --- | --- | --- |
+| location  | string | URL or filename used to locate the wordlist | N/A |
+| localfile  | boolean | Wheter the dictionary comes from a local file or a URL | N/A |
+
+#### readWordlistFromNetwork<a name="readWordlistFromNetwork"/>
+
+Loads a wordlist from a URL.
+Returns an array with every line from the wordlist.
+
+| Param  | Type   | Description | Default |
+| --- | --- | --- | --- |
+| wordlist  | string | URL of the wordlist used to get the words | N/A |
+
+
 #### readWordlistFromFile<a name="readWordlistFromFile"/>
 
-Loads a wordlist from a file and maps it into an array.
-As long as its format is similar to the [https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt](EFF wordlist), it should be able to load it.
-It assumes the wordlist uses 5 regular dices, resulting in 7776 words.
+Loads a wordlist from a file.
+Returns an array with every line from the wordlist.
 
-| Param  | Type   | Description                                                | Default |
+| Param  | Type   | Description | Default |
 | --- | --- | --- | --- |
-| wordlist  | string | URL or local path of the wordlist used to get the words | N/A |
-
-#### readWordlistFromNetwork<a name="main-functions"/>
-
-Loads a wordlist from a URL and maps it into an array.
-As long as its format is similar to the [https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt](EFF wordlist), it should be able to load it.
-It assumes the wordlist uses 5 regular dices, resulting in 7776 words.
-
-| Param  | Type   | Description                                                | Default |
-| --- | --- | --- | --- |
-| wordlist  | string | URL or local path of the wordlist used to get the words | N/A |
+| wordlist  | string | Local path of the wordlist used to get the words | N/A |
 
